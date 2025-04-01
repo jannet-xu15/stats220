@@ -1,0 +1,121 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+body{
+  font-family: 'Arial', sans-serif;
+  background-color: #FFF7F3;
+  color: #C599B6;
+}
+
+h2{
+  text-align: center;
+  font-size: 20px;
+  font-family: 
+  color: #C599B6;
+}
+
+p{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+#text{
+  font-size: 10px;
+}
+
+pre{
+  text-align: center;
+}
+```
+
+## This dynamic report captures trends in shoe brands and shoe colour.
+
+```{r}
+library(tidyverse)
+library(magick)
+
+#URL to my collected data
+csv_file <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9FjAYIcVolBBqlki61MtRaqxANC8ZIf6eiRccoxXr4eN29PoIWXS_8uF1M2Jt47MfSBrhoseDuo7L/pub?output=csv"
+
+#Reading and renaming of my data columns
+logged_data <- read_csv(csv_file)  %>%
+  rename(shoe_brand = 2,
+         shoe_colour = 3,
+         people_count = 4,
+         unique_brands = 5,
+         location = 6)
+
+#Summary values
+max_unique_brands <- max(logged_data$unique_brands)
+
+total_people <- logged_data$people_count %>% sum()
+
+#Dynamic reporting of values
+cat(paste("The maximum number of unique shoe brands in my observation are", 
+      max_unique_brands, 
+      "brands."))
+cat(paste("The total people observed in my observation are", 
+      total_people, 
+      "people."))
+```
+
+This graph shows the different brands of shoes I observed, and how many of each brand I observed.
+
+```{r}
+#Bar charts
+#Shoe brand bar chart
+ggplot(data = logged_data) +
+  geom_bar(aes(x = shoe_brand),
+           fill = '#bc9bbf') + 
+  labs(title = "Shoe Brand Popularity: Number of Shoes by Brand",
+       x = "Brand of Shoes",
+       y = "Number of Shoes")
+
+```
+
+It was interesting to see the many different brands of shoes whilst I was making my observations, and which brand hadthe highest number of shoes.
+
+This graph shows the different colours of shoes I observed, and how many of each colour I observed.
+
+```{r}
+#Shoe colour bar chart
+ggplot(data = logged_data) +
+  geom_bar(aes(x = shoe_colour),
+           fill = '#cf84bb') +
+  labs(title = "Shoe Color Distribution: Number of Shoes by Colour",
+       x = "Colour of Shoes",
+       y = "Number of Shoes")
+
+```
+
+From this graph, I can see that out of the many people I observed, there weren't many wearing bright colours.
+
+This is an animated graph showing the frequent locations which I visited and made the observations overtime. This animation shows 4 frames, each with an increasing number of data.
+
+```{r}
+frame_1 <- image_read("frame_1.png") %>%
+  image_resize("600x400!")
+
+frame_2 <- image_read("frame_2.png") %>%
+  image_resize("600x400!")
+
+frame_3 <- image_read("frame_3.png") %>%
+  image_resize("600x400!")
+
+frame_4 <- image_read("frame_4.png") %>%
+  image_resize("600x400!")
+
+animated_locations <- c(frame_1, frame_2, frame_3, frame_4)
+  
+
+image_animate(animated_locations, fps = 1)
+```

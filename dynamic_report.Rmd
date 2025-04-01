@@ -102,16 +102,16 @@ From this graph, I can see that out of the many people I observed, there weren't
 This is an animated graph showing the frequent locations which I visited and made the observations overtime. This animation shows 4 frames, each with an increasing number of data.
 
 ```{r}
-frame_1 <- image_read("frame_1.png") %>%
+frame_1 <- image_read("https://jannet-xu15.github.io/stats220/frame_1.png") %>%
   image_resize("600x400!")
 
-frame_2 <- image_read("frame_2.png") %>%
+frame_2 <- image_read("https://jannet-xu15.github.io/stats220/frame_2.png") %>%
   image_resize("600x400!")
 
-frame_3 <- image_read("frame_3.png") %>%
+frame_3 <- image_read("https://jannet-xu15.github.io/stats220/frame_3.png") %>%
   image_resize("600x400!")
 
-frame_4 <- image_read("frame_4.png") %>%
+frame_4 <- image_read("https://jannet-xu15.github.io/stats220/frame_4.png") %>%
   image_resize("600x400!")
 
 animated_locations <- c(frame_1, frame_2, frame_3, frame_4)
